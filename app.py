@@ -9,9 +9,20 @@ def home():
 @app.route('/post',methods=['POST'])
 def post():
     data = request.json
-    message = data['text']
-    answer = database(message)
-    return jsonify({'your_message': answer})
+
+    # Create variables from request data
+    submission_id = ['submit_id']
+    email = data['email']
+    cro_address = data['cro_address']
+    ip_address = data['ip']
+
+    # Run database function
+    db = database(email,cro_address,ip_address,submission_id)
+
+    if db == True:
+        return 200
+
+    return 'something went wrong'
 
 if __name__ == '__main__':
     app.run(threaded=True,port=5000)
