@@ -1,5 +1,5 @@
 from flask import Flask,request,jsonify,json
-
+from database_function import database
 app = Flask(__name__)
 
 @app.route('/', methods=['GET'])
@@ -10,7 +10,8 @@ def home():
 def post():
     data = request.json
     message = data['text']
-    return jsonify({'your_message': message})
+    answer = database(message)
+    return jsonify({'your_message': answer})
 
 if __name__ == '__main__':
     app.run(threaded=True,port=5000)
